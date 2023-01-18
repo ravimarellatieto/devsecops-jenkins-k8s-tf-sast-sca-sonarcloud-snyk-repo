@@ -28,7 +28,7 @@ pipeline {
       }
     }
     
-    stage('Push to aws'){
+    stage('Push to awsd'){
       steps{
         script{
           docker.withRegistry('https://306387808166.dkr.ecr.us-west-2.amazonaws.com/dbw', 'ecr:us-west-2:aws-credentials'){
