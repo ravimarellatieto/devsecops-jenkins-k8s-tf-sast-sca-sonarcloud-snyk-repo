@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devsecopsbuggywebapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devsecopsbuggywebapp
+  template:
+    metadata:
+      labels:
+        app: devsecopsbuggywebapp
+    spec:
+      containers:
+      - name: devsecopsbuggywebapp
+        image: 306387808166.dkr.ecr.us-west-2.amazonaws.com/dbw
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+# service type loadbalancer       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: devsecopsbuggywebapp
+    k8s-app: devsecopsbuggywebapp
+  name: devsecopsbuggywebapp
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  type: LoadBalancer
+  selector:
+    app: devsecopsbuggywebapp
